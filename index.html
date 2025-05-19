@@ -129,4 +129,32 @@
     <div class="cell char-bottom g5" style="display: none;">характеристика</div>
   </div>
 </body>
+  <script>
+  const JSON_URL = 'https://yung-ua.github.io/bunker/overlay.json';
+
+  async function updateOverlay() {
+    const res = await fetch(JSON_URL);
+    const data = await res.json();
+
+    data.players.forEach(p => {
+      const nameClass = `name-${p.bottom ? 'bottom' : 'top'} ${p.slot}`;
+      const charClass = `char-${p.bottom ? 'bottom' : 'top'} ${p.slot}`;
+
+      const nameEl = document.querySelector(`.name-${p.bottom ? 'bottom' : 'top'}.${p.slot}`);
+      const charEl = document.querySelector(`.char-${p.bottom ? 'bottom' : 'top'}.${p.slot}`);
+
+      if (nameEl) nameEl.textContent = p.name;
+      if (charEl) charEl.textContent = p.char;
+
+      // Додати динамічний клас (наприклад, якщо потрібно спеціально стилізувати)
+      if (p.slot === 'g5') {
+        nameEl.classList.add('ведучий');
+      }
+    });
+  }
+
+  updateOverlay();
+  setInterval(updateOverlay, 2000);
+</script>
+
 </html>
