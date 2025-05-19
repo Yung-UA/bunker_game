@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Оверлей для гри</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .overlay {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: 190px 70px 250px 250px 70px 190px;
+      gap: 8px;
+      padding: 5px;
+    }
+
+    .cell {
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      background-color: rgba(0, 0, 0, 0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+      padding: 10px;
+      animation: glow 3s ease-in-out infinite;
+    }
+
+    .name-top, .name-bottom {
+      font-size: 36px;
+      background-image: url('https://www.transparenttextures.com/patterns/dark-mosaic.png');
+      background-color: rgba(40, 30, 20, 0.7);
+      color: #fff;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .g5.name-top,
+    .g5.name-bottom {
+      color: #FFD700; /* Золото-жовтий текст */
+      background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+      background-color: rgba(90, 70, 0, 0.5); /* Темно-золотистий фон */
+      border-color: rgba(255, 215, 0, 0.6); /* Напівпрозора золота рамка */
+    }
+
+
+    .char-top, .char-bottom {
+      font-size: 32px;
+    }
+
+    .char-top { grid-row: 1 / 2; }
+    .name-top { grid-row: 2 / 3; }
+    .webcam-top { grid-row: 3 / 4; }
+
+    .webcam-bottom { grid-row: 4 / 5; }
+    .name-bottom { grid-row: 5 / 6; }
+    .char-bottom { grid-row: 6 / 7; }
+
+    .g1 { grid-column: 1 / 2; }
+    .g2 { grid-column: 2 / 3; }
+    .g3 { grid-column: 3 / 4; }
+    .g4 { grid-column: 4 / 5; }
+    .g5 { grid-column: 5 / 6; }
+
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 1px rgba(255,255,255,0.2); }
+      50% { box-shadow: 0 0 4px rgba(255,255,255,0.5); }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <!-- Верхній ряд -->
+    <div class="cell char-top g1">характеристика</div>
+    <div class="cell char-top g2">характеристика</div>
+    <div class="cell char-top g3">характеристика</div>
+    <div class="cell char-top g4">характеристика</div>
+    <div class="cell char-top g5">характеристика</div>
+
+    <div class="cell name-top g1">гравець 1</div>
+    <div class="cell name-top g2">гравець 2</div>
+    <div class="cell name-top g3">гравець 3</div>
+    <div class="cell name-top g4">гравець 4</div>
+    <div class="cell name-top g5">Ведучий k3r1nzz</div>
+
+    <div class="cell webcam-top g1"></div>
+    <div class="cell webcam-top g2"></div>
+    <div class="cell webcam-top g3"></div>
+    <div class="cell webcam-top g4"></div>
+    <div class="cell webcam-top g5"></div>
+
+    <!-- Нижній ряд -->
+    <div class="cell webcam-bottom g1"></div>
+    <div class="cell webcam-bottom g2"></div>
+    <div class="cell webcam-bottom g3"></div>
+    <div class="cell webcam-bottom g4"></div>
+    <div class="cell webcam-bottom g5"></div>
+
+    <div class="cell name-bottom g1">yunglenis</div>
+    <div class="cell name-bottom g2">гравець 6</div>
+    <div class="cell name-bottom g3">гравець 7</div>
+    <div class="cell name-bottom g4">гравець 8</div>
+    <div class="cell name-bottom g5">Чат</div>
+
+    <div class="cell char-bottom g1">характеристика</div>
+    <div class="cell char-bottom g2">характеристика</div>
+    <div class="cell char-bottom g3">характеристика</div>
+    <div class="cell char-bottom g4">характеристика</div>
+    <div class="cell char-bottom g5" style="display: none;">характеристика</div>
+  </div>
+</body>
+</html>
