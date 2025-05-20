@@ -167,7 +167,12 @@
 
             if (charEl) {
               const safeChar = p.char.replace(/\n/g, '<br>');
-              charEl.innerHTML = `<div class="scroll">${safeChar}</div>`;
+              if (charEl.classList.contains('char-gm')) {
+  charEl.innerHTML = safeChar; // без анімації
+} else {
+  charEl.innerHTML = `<div class="scroll">${safeChar}</div>`;
+}
+
               charEl.classList.toggle('expelled', p.class === 'expelled');
             }
           });
