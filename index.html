@@ -67,13 +67,19 @@
       position: static !important;
     }
 
-    .char-top .scroll, .char-bottom .scroll {
-      position: absolute;
-      white-space: pre-line;
-      display: inline-block;
-      top: 100%;
-      animation: scroll-text 20s linear infinite;
-    }
+.char-top .scroll, .char-bottom .scroll {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  animation: scroll-loop 20s linear infinite;
+}
+
+@keyframes scroll-loop {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
 
     @keyframes scroll-text {
       0% { top: 100%; }
