@@ -17,22 +17,26 @@
       justify-content: center;
       font-family: 'Roboto', sans-serif;
     }
-.expelled {
-  color: #ff4c4c !important;
-  border: 2px solid rgba(255, 76, 76, 0.9) !important;
-  background-color: rgba(100, 0, 0, 0.4) !important;
-  animation: expelled-glow 2s ease-in-out infinite !important;
-}
 
+    .expelled {
+      color: #ff4c4c !important;
+      background-color: rgba(100, 0, 0, 0.4) !important;
+      border: 2px solid rgba(255, 76, 76, 0.9) !important;
+      animation: expelled-glow 2s ease-in-out infinite !important;
+    }
 
-@keyframes expelled-glow {
-  0%, 100% {
-    box-shadow: 0 0 6px rgba(255, 76, 76, 0.4);
-  }
-  50% {
-    box-shadow: 0 0 12px rgba(255, 76, 76, 0.8);
-  }
-}
+    .expelled .scroll {
+      color: #ff4c4c !important;
+    }
+
+    @keyframes expelled-glow {
+      0%, 100% {
+        box-shadow: 0 0 6px rgba(255, 76, 76, 0.4);
+      }
+      50% {
+        box-shadow: 0 0 12px rgba(255, 0, 0, 0.8);
+      }
+    }
 
     .overlay {
       position: relative;
@@ -82,25 +86,18 @@
       animation: none !important;
       position: static !important;
     }
-    
 
-.char-top .scroll, .char-bottom .scroll {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  animation: scroll-loop 20s linear infinite;
-}
+    .char-top .scroll, .char-bottom .scroll {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      animation: scroll-loop 40s linear infinite;
+    }
 
-@keyframes scroll-loop {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-50%); }
-}
-
-
-    @keyframes scroll-text {
-      0% { top: 100%; }
-      100% { top: -100%; }
+    @keyframes scroll-loop {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-100%); }
     }
 
     .char-top { grid-row: 1 / 2; }
@@ -193,9 +190,9 @@
           if (charEl) {
             const safeChar = p.char.replace(/\n/g, '<br>');
             if (charEl.classList.contains('char-gm')) {
-              charEl.innerHTML = safeChar; // без анімації
+              charEl.innerHTML = safeChar;
             } else {
-              const delay = Math.floor(Math.random() * 2000); // 0–5000 мс
+              const delay = Math.floor(Math.random() * 5000);
               const repeatedChar = `${safeChar}<br><br>${safeChar}<br><br>${safeChar}`;
               charEl.innerHTML = `<div class="scroll" style="animation-delay: ${delay}ms;">${repeatedChar}</div>`;
             }
@@ -209,8 +206,8 @@
       });
   }
 
-  updateOverlay(); // перше завантаження
-  setInterval(updateOverlay, 40000); // оновлення щохвилини
+  updateOverlay();
+  setInterval(updateOverlay, 40000);
 </script>
 
 </body>
