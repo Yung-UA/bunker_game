@@ -55,6 +55,15 @@
       text-align: left;
       padding: 10px;
     }
+    .char-gm {
+  animation: none !important;
+  overflow: auto !important;
+}
+
+.char-gm .scroll {
+  animation: none !important;
+  position: static !important;
+}
 
     .char-top .scroll, .char-bottom .scroll {
       position: absolute;
@@ -102,7 +111,7 @@
     <div class="cell name-top g2">...</div>
     <div class="cell name-top g3">...</div>
     <div class="cell name-top g4">...</div>
-    <div class="cell name-top g5">...</div>
+    <div class="cell name-top char-gm g5">...</div>
 
     <div class="cell webcam-top g1"></div>
     <div class="cell webcam-top g2"></div>
