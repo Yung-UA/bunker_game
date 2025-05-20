@@ -113,31 +113,39 @@
     <div class="cell char-bottom g5">...</div>
   </div>
 
-  <script>
-    const JSON_URL = 'https://raw.githubusercontent.com/Yung-UA/bunker_game.github.io/main/overlay.json';
+<script>
+  const JSON_URL = 'https://raw.githubusercontent.com/Yung-UA/bunker_game.github.io/main/overlay.json';
 
-    async function updateOverlay() {
-      try {
-        const res = await fetch(JSON_URL + '?v=' + Date.now()); // кеш-бастер
-        const data = await res.json();
+  async function updateOverlay() {
+    try {
+      const res = await fetch(JSON_URL + '?v=' + Date.now()); // кеш-бастер
+      const data = await res.json();
 
-        data.players.forEach(p => {
-          const nameSelector = `.name-${p.bottom ? 'bottom' : 'top'}.${p.slot}`;
-          const charSelector = `.char-${p.bottom ? 'bottom' : 'top'}.${p.slot}`;
+      data.players.forEach(p => {
+        const nameSelector = `.name-${p.bottom ? 'bottom' : 'top'}.${p.slot}`;
+        const charSelector = `.char-${p.bottom ? 'bottom' : 'top'}.${p.slot}`;
 
-          const nameEl = document.querySelector(nameSelector);
-          const charEl = document.querySelector(charSelector);
+        const nameEl = document.querySelector(nameSelector);
+        const charEl = document.querySelector(charSelector);
 
-          if (nameEl) nameEl.textContent = p.name;
-          if (charEl) charEl.textContent = p.char;
-        });
-      } catch (err) {
-        console.error("Помилка завантаження overlay.json", err);
-      }
+        if (nameEl) {
+          nameEl.textContent = p.name;
+          nameEl.classList.toggle('expelled', p.class === 'expelled');
+        }
+
+        if (charEl) {
+          charEl.innerHTML = p.char.replace(/\n/g, '<br>');
+          charEl.classList.toggle('expelled', p.class === 'expelled');
+        }
+      });
+    } catch (err) {
+      console.error("Помилка завантаження overlay.json", err);
     }
+  }
 
-    updateOverlay();
-    setInterval(updateOverlay, 2000);
-  </script>
+  updateOverlay();
+  setInterval(updateOverlay, 2000);
+</script>
+
 </body>
 </html>
