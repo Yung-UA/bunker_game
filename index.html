@@ -147,52 +147,54 @@
     <div class="cell char-bottom g5" style="display: none;"></div>
   </div>
 
-  <script>
-    const JSON_URL = 'https://bunker-game-github-io.vercel.app/overlay.json';
+<script>
+  const JSON_URL = 'https://bunker-game-github-io.vercel.app/overlay.json';
 
-    function updateOverlay() {
-      console.log("🌀 Перевірка оновлення:", new Date().toLocaleTimeString());
+  function updateOverlay() {
+    console.log("🌀 Перевірка оновлення:", new Date().toLocaleTimeString());
 
-      fetch(JSON_URL + '?v=' + Date.now(), { cache: 'no-store' })
-        .then(res => {
-          if (!res.ok) throw new Error(`HTTP ${res.status}`);
-          return res.json();
-        })
-        .then(data => {
-          console.log("✅ Отримано дані:", data);
+    fetch(JSON_URL + '?v=' + Date.now(), { cache: 'no-store' })
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then(data => {
+        console.log("✅ Отримано дані:", data);
 
-          data.players.forEach(p => {
-            const nameSelector = `.name-${p.bottom ? 'bottom' : 'top'}.${p.slot}`;
-            const charSelector = `.char-${p.bottom ? 'bottom' : 'top'}.${p.slot}`;
+        data.players.forEach(p => {
+          const nameSelector = `.name-${p.bottom ? 'bottom' : 'top'}.${p.slot}`;
+          const charSelector = `.char-${p.bottom ? 'bottom' : 'top'}.${p.slot}`;
 
-            const nameEl = document.querySelector(nameSelector);
-            const charEl = document.querySelector(charSelector);
+          const nameEl = document.querySelector(nameSelector);
+          const charEl = document.querySelector(charSelector);
 
-            if (nameEl) {
-              nameEl.textContent = p.name;
-              nameEl.classList.toggle('expelled', p.class === 'expelled');
+          if (nameEl) {
+            nameEl.textContent = p.name;
+            nameEl.classList.toggle('expelled', p.class === 'expelled');
+          }
+
+          if (charEl) {
+            const safeChar = p.char.replace(/\n/g, '<br>');
+            if (charEl.classList.contains('char-gm')) {
+              charEl.innerHTML = safeChar; // без анімації
+            } else {
+              const delay = Math.floor(Math.random() * 5000); // 0–5000 мс
+              const repeatedChar = `${safeChar}<br><br>${safeChar}<br><br>${safeChar}`;
+              charEl.innerHTML = `<div class="scroll" style="animation-delay: ${delay}ms;">${repeatedChar}</div>`;
             }
 
-            if (charEl) {
-              const safeChar = p.char.replace(/\n/g, '<br>');
-              if (charEl.classList.contains('char-gm')) {
-                charEl.innerHTML = safeChar; // без анімації
-              } else {
-                const delay = Math.floor(Math.random() * 5000); // 0–5000 мс
-                charEl.innerHTML = `<div class="scroll" style="animation-delay: ${delay}ms;">${safeChar}<br><br>${safeChar}</div>`;
-              }
-
-              charEl.classList.toggle('expelled', p.class === 'expelled');
-            }
-          });
-        })
-        .catch(err => {
-          console.error("❌ Помилка завантаження overlay.json:", err);
+            charEl.classList.toggle('expelled', p.class === 'expelled');
+          }
         });
-    }
+      })
+      .catch(err => {
+        console.error("❌ Помилка завантаження overlay.json:", err);
+      });
+  }
 
-    updateOverlay(); // перше завантаження
-    setInterval(updateOverlay, 60000); // оновлення кожні 20 сек
-  </script>
+  updateOverlay(); // перше завантаження
+  setInterval(updateOverlay, 60000); // оновлення щохвилини
+</script>
+
 </body>
 </html>
