@@ -178,7 +178,7 @@
             if (charEl.classList.contains('char-gm')) {
               charEl.innerHTML = safeChar; // без анімації
             } else {
-              const delay = Math.floor(Math.random() * 5000); // 0–5000 мс
+              const delay = Math.floor(Math.random() * 2000); // 0–5000 мс
               const repeatedChar = `${safeChar}<br><br>${safeChar}<br><br>${safeChar}`;
               charEl.innerHTML = `<div class="scroll" style="animation-delay: ${delay}ms;">${repeatedChar}</div>`;
             }
