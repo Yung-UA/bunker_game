@@ -118,9 +118,7 @@
 
   async function updateOverlay() {
     try {
-      const res = await fetch(JSON_URL + '?v=' + Date.now(), {
-  cache: 'no-store'
-});
+      const res = await fetch(JSON_URL + '?v=' + Date.now(), { cache: 'no-store' })
       const data = await res.json();
 
       data.players.forEach(p => {
