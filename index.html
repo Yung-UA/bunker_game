@@ -49,7 +49,24 @@
     }
 
     .char-top, .char-bottom {
-      font-size: 24px;
+      font-size: 20px;
+      overflow: hidden;
+      position: relative;
+      text-align: left;
+      padding: 10px;
+    }
+
+    .char-top .scroll, .char-bottom .scroll {
+      position: absolute;
+      white-space: pre-line;
+      display: inline-block;
+      top: 100%;
+      animation: scroll-text 20s linear infinite;
+    }
+
+    @keyframes scroll-text {
+      0% { top: 100%; }
+      100% { top: -100%; }
     }
 
     .char-top { grid-row: 1 / 2; }
@@ -75,11 +92,11 @@
 <body>
   <div class="overlay">
     <!-- Верх -->
-    <div class="cell char-top g1">...</div>
-    <div class="cell char-top g2">...</div>
-    <div class="cell char-top g3">...</div>
-    <div class="cell char-top g4">...</div>
-    <div class="cell char-top g5">...</div>
+    <div class="cell char-top g1"></div>
+    <div class="cell char-top g2"></div>
+    <div class="cell char-top g3"></div>
+    <div class="cell char-top g4"></div>
+    <div class="cell char-top g5"></div>
 
     <div class="cell name-top g1">...</div>
     <div class="cell name-top g2">...</div>
@@ -106,54 +123,53 @@
     <div class="cell name-bottom g4">...</div>
     <div class="cell name-bottom g5" style="display: none;">...</div>
 
-    <div class="cell char-bottom g1">...</div>
-    <div class="cell char-bottom g2">...</div>
-    <div class="cell char-bottom g3">...</div>
-    <div class="cell char-bottom g4">...</div>
-    <div class="cell char-bottom g5" style="display: none;">...</div>
+    <div class="cell char-bottom g1"></div>
+    <div class="cell char-bottom g2"></div>
+    <div class="cell char-bottom g3"></div>
+    <div class="cell char-bottom g4"></div>
+    <div class="cell char-bottom g5" style="display: none;"></div>
   </div>
 
-<script>
-  const JSON_URL = 'https://bunker-game-github-io.vercel.app/overlay.json';
+  <script>
+    const JSON_URL = 'https://bunker-game-github-io.vercel.app/overlay.json';
 
-  function updateOverlay() {
-    console.log("🌀 Перевірка оновлення:", new Date().toLocaleTimeString());
+    function updateOverlay() {
+      console.log("🌀 Перевірка оновлення:", new Date().toLocaleTimeString());
 
-    fetch(JSON_URL + '?v=' + Date.now(), { cache: 'no-store' })
-      .then(res => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json();
-      })
-      .then(data => {
-        console.log("✅ Отримано дані:", data);
+      fetch(JSON_URL + '?v=' + Date.now(), { cache: 'no-store' })
+        .then(res => {
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          return res.json();
+        })
+        .then(data => {
+          console.log("✅ Отримано дані:", data);
 
-        data.players.forEach(p => {
-          const nameSelector = `.name-${p.bottom ? 'bottom' : 'top'}.${p.slot}`;
-          const charSelector = `.char-${p.bottom ? 'bottom' : 'top'}.${p.slot}`;
+          data.players.forEach(p => {
+            const nameSelector = `.name-${p.bottom ? 'bottom' : 'top'}.${p.slot}`;
+            const charSelector = `.char-${p.bottom ? 'bottom' : 'top'}.${p.slot}`;
 
-          const nameEl = document.querySelector(nameSelector);
-          const charEl = document.querySelector(charSelector);
+            const nameEl = document.querySelector(nameSelector);
+            const charEl = document.querySelector(charSelector);
 
-          if (nameEl) {
-            nameEl.textContent = p.name;
-            nameEl.classList.toggle('expelled', p.class === 'expelled');
-          }
+            if (nameEl) {
+              nameEl.textContent = p.name;
+              nameEl.classList.toggle('expelled', p.class === 'expelled');
+            }
 
-          if (charEl) {
-            charEl.innerHTML = p.char.replace(/\n/g, '<br>');
-            charEl.classList.toggle('expelled', p.class === 'expelled');
-          }
+            if (charEl) {
+              const safeChar = p.char.replace(/\n/g, '<br>');
+              charEl.innerHTML = `<div class="scroll">${safeChar}</div>`;
+              charEl.classList.toggle('expelled', p.class === 'expelled');
+            }
+          });
+        })
+        .catch(err => {
+          console.error("❌ Помилка завантаження overlay.json:", err);
         });
-      })
-      .catch(err => {
-        console.error("❌ Помилка завантаження overlay.json:", err);
-      });
-  }
+    }
 
-  updateOverlay(); // Перше завантаження одразу
-  setInterval(updateOverlay, 2000); // Далі кожні 2 сек
-</script>
-
-
+    updateOverlay(); // перше завантаження
+    setInterval(updateOverlay, 2000); // оновлення кожні 2 сек
+  </script>
 </body>
 </html>
