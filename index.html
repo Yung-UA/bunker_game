@@ -116,36 +116,44 @@
 <script>
   const JSON_URL = 'https://raw.githubusercontent.com/Yung-UA/bunker_game.github.io/main/overlay.json';
 
-  async function updateOverlay() {
-    try {
-      const res = await fetch(JSON_URL + '?v=' + Date.now(), { cache: 'no-store' })
-      const data = await res.json();
+  function updateOverlay() {
+    console.log("🌀 Перевірка оновлення:", new Date().toLocaleTimeString());
 
-      data.players.forEach(p => {
-        const nameSelector = `.name-${p.bottom ? 'bottom' : 'top'}.${p.slot}`;
-        const charSelector = `.char-${p.bottom ? 'bottom' : 'top'}.${p.slot}`;
+    fetch(JSON_URL + '?v=' + Date.now(), { cache: 'no-store' })
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then(data => {
+        console.log("✅ Отримано дані:", data);
 
-        const nameEl = document.querySelector(nameSelector);
-        const charEl = document.querySelector(charSelector);
+        data.players.forEach(p => {
+          const nameSelector = `.name-${p.bottom ? 'bottom' : 'top'}.${p.slot}`;
+          const charSelector = `.char-${p.bottom ? 'bottom' : 'top'}.${p.slot}`;
 
-        if (nameEl) {
-          nameEl.textContent = p.name;
-          nameEl.classList.toggle('expelled', p.class === 'expelled');
-        }
+          const nameEl = document.querySelector(nameSelector);
+          const charEl = document.querySelector(charSelector);
 
-        if (charEl) {
-          charEl.innerHTML = p.char.replace(/\n/g, '<br>');
-          charEl.classList.toggle('expelled', p.class === 'expelled');
-        }
+          if (nameEl) {
+            nameEl.textContent = p.name;
+            nameEl.classList.toggle('expelled', p.class === 'expelled');
+          }
+
+          if (charEl) {
+            charEl.innerHTML = p.char.replace(/\n/g, '<br>');
+            charEl.classList.toggle('expelled', p.class === 'expelled');
+          }
+        });
+      })
+      .catch(err => {
+        console.error("❌ Помилка завантаження overlay.json:", err);
       });
-    } catch (err) {
-      console.error("Помилка завантаження overlay.json", err);
-    }
   }
 
-  updateOverlay();
-  setInterval(updateOverlay, 2000);
+  updateOverlay(); // Перше завантаження одразу
+  setInterval(updateOverlay, 2000); // Далі кожні 2 сек
 </script>
+
 
 </body>
 </html>
