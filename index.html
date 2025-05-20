@@ -17,6 +17,21 @@
       justify-content: center;
       font-family: 'Roboto', sans-serif;
     }
+    .expelled {
+  color: #ff4c4c;
+  border: 2px solid rgba(255, 76, 76, 0.7);
+  background-color: rgba(100, 0, 0, 0.3);
+  animation: expelled-glow 2s ease-in-out infinite;
+}
+
+@keyframes expelled-glow {
+  0%, 100% {
+    box-shadow: 0 0 6px rgba(255, 76, 76, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 12px rgba(255, 76, 76, 0.8);
+  }
+}
 
     .overlay {
       position: relative;
@@ -66,6 +81,7 @@
       animation: none !important;
       position: static !important;
     }
+    
 
 .char-top .scroll, .char-bottom .scroll {
   position: absolute;
