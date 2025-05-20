@@ -82,10 +82,18 @@
       white-space: pre-line !important;
     }
 
-    .char-gm .scroll {
-      animation: none !important;
-      position: static !important;
-    }
+.char-gm {
+  animation: none !important;
+  overflow: auto !important;
+  white-space: pre-line !important;
+
+  /* новий стиль ведучого */
+  background-color: rgba(255, 140, 0, 0.15) !important;
+  border: 2px solid rgba(255, 165, 0, 0.7) !important;
+  color: #ffa500 !important;
+  box-shadow: 0 0 12px rgba(255, 165, 0, 0.4);
+}
+
 
     .char-top .scroll, .char-bottom .scroll {
       position: absolute;
